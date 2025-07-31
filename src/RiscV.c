@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h> 
+#include <string.h>
 
 // function prototypes
 int32_t sign_extension(uint32_t value, int bits);
@@ -437,8 +438,12 @@ int main(int argc, char *argv[]) {
     // --- Hardware Initialization ---
     // memory starts at 0x80000000 for this simulator
     const uint32_t mem_offset = 0x80000000;
-    // 32KB of memory
-    uint8_t memory[32 * 1024] = {0}; 
+    
+    const uint32_t mem_size = 32 * 1024;
+    uint8_t *memory = NULL;
+    memory = (uint8_t *)malloc(mem_size);
+    memset(memory, 0, mem_size);
+
     uint32_t pc = mem_offset;
     uint32_t registers[32] = {0};
     // ABI names for the registers, useful for debbug
